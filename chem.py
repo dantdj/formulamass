@@ -24,7 +24,6 @@ while True:
 		print "Total weight =" ,weightSum
 			
 	if choice == 2:
-		print "Not ready, try a later version"
 		formula = raw_input("Enter formula: ")
 		
 		#Divide formula by capitals, append numbers to previous element, lookup weight
