@@ -37,7 +37,7 @@ while True:
 	if choice == 3:
 		numberOfPrompts = int(raw_input("Enter total amount of formulae: "))
 		for i in range(numberOfPrompts):
-			# will prompt "Enter Element 1: " on the first iteration
+			# will prompt "Enter formula 1: " on the first iteration
 			formula = raw_input("Enter formula %s: " % (i+1, )) 
 							
 		print "Total weight = ", float(molecularWeight(formula))
