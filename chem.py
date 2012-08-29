@@ -1,6 +1,11 @@
 import csv
 import re
 
+#Divide formula by capitals, append numbers to previous element, lookup weight
+def molecularWeight(formula):
+	matches = re.findall(r"([A-Z][a-z]?)([0-9]*)", formula)
+	return sum(float(formul_data.get(symbol.lower(), 0)) * (int(count) if count else 1)
+				for (symbol, count) in matches)
 
 #Read in data and store it in dictionary
 elemen_data = { element.lower():weight for element,weight in csv.reader(open("chem.csv", "rb"))}
@@ -25,17 +30,17 @@ while True:
 			
 	if choice == 2:
 		formula = raw_input("Enter formula: ")
-		
-		#Divide formula by capitals, append numbers to previous element, lookup weight
-		def molecularWeight(formula):
-			matches = re.findall(r"([A-Z][a-z]?)([0-9]*)", formula)
-			return sum(float(formul_data.get(symbol.lower(), 0)) * (int(count) if count else 1)
-						for (symbol, count) in matches)
-		
+
 		#Print results of function
 		print "Total weight =", float(molecularWeight(formula))
 		
-		
-		
+	if choice == 3:
+		numberOfPrompts = int(raw_input("Enter total amount of formulae: "))
+		for i in range(numberOfPrompts):
+			# will prompt "Enter Element 1: " on the first iteration
+			formula = raw_input("Enter formula %s: " % (i+1, )) 
+							
+		print "Total weight = ", float(molecularWeight(formula))
+			
 	if choice == 0:
 		break
