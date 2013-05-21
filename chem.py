@@ -3,16 +3,29 @@ import re
 
 #Divide formula by capitals, append numbers to previous element, lookup weight
 def molecularWeight(formula):
-	matches = re.findall(r"([A-Z][a-z]?)([0-9]*)", formula)
-	return sum(float(formul_data.get(symbol.lower(), 0)) * (int(count) if count else 1)
-				for (symbol, count) in matches)
-
+        # Match either element + number or something in brackets + number
+        # [^\)] means anything but a closing bracket.
+        matches = re.findall(r"([A-Z][a-z]?|\([^\)]+\))([0-9]*)", formula)
+        weight = 0.0
+        for (symbol, count) in matches:
+                if (symbol[0] == "("):
+                        # This is a bracketed expression. get molecular weight of its gut
+                        weight += molecularWeight(symbol[1:-1]) * (int(count) if count else 1)
+                else:
+                        # It's an element. Proceed as needed.
+                        weight += float(formul_data.get(symbol.lower(), 0)) * (int(count) if count else 1)
+        return weight
+						
 #Read in data and store it in dictionary
 elemen_data = { element.lower():weight for element,weight in csv.reader(open("chem.csv", "rb"))}
 formul_data = { element.lower():weight for element,weight in csv.reader(open("form.csv", "rb"))}
 
 while True:
-	choice = int(raw_input("Element name or Formula? (1/2): "))
+	try:
+		choice = int(raw_input("Element name or Formula? (1/2): "))
+	except ValueError:
+		print "Make sure you enter either 1 or 2!"
+		continue
 
 	if choice == 1:
 		elements = {}
